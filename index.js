@@ -47,12 +47,7 @@ async function run() {
         })
         app.post('/products', async (req, res) => {
             const user = req.body;
-            // const email = user.email;
-            // const query = { email };
-            // const cursor = Users.find(query);
-            // const find = await cursor.toArray();
 
-            // console.log(find.length)
             const result = await Products.insertOne(user)
 
             res.send(result);
@@ -66,6 +61,20 @@ async function run() {
             const services = await cursor.toArray();
             res.send(services);
         });
+        app.get('/products', async (req, res) => {
+            // const id = req.params.id;
+            const query = {}
+            const cursor = Products.find();
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { category: id }
+            const cursor = Products.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        })
 
 
     } catch (error) {

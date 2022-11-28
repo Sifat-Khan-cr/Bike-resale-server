@@ -63,6 +63,18 @@ async function run() {
 
         })
 
+        app.get('/buyer', async (req, res) => {
+            const query = { seller: false }
+            const cursor = Users.find(query);
+            const services = await cursor.toArray();
+            res.send(services);
+        });
+        app.get('/seller', async (req, res) => {
+            const query = { seller: true }
+            const cursor = Users.find(query);
+            const services = await cursor.toArray();
+            res.send(services);
+        });
         app.get('/category', async (req, res) => {
             const query = {}
             const cursor = Category.find();

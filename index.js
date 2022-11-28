@@ -75,6 +75,24 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products);
         })
+        app.get('/advertized', async (req, res) => {
+            const query = { advertized: true }
+            const cursor = Products.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+        app.patch('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            // const status = req.body.status
+            const query = { _id: ObjectId(id) }
+            const updatedDoc = {
+                $set: {
+                    booked: true
+                }
+            }
+            const result = await Products.updateOne(query, updatedDoc);
+            res.send(result);
+        })
 
 
     } catch (error) {

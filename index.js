@@ -45,6 +45,14 @@ async function run() {
 
 
         })
+        app.get('/products/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { sellerEmail: email }
+            const cursor = Products.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+
+        })
         app.post('/products', async (req, res) => {
             const user = req.body;
 
@@ -62,7 +70,6 @@ async function run() {
             res.send(services);
         });
         app.get('/products', async (req, res) => {
-            // const id = req.params.id;
             const query = {}
             const cursor = Products.find();
             const products = await cursor.toArray();
@@ -72,6 +79,13 @@ async function run() {
             const id = req.params.id;
             const query = { category: id }
             const cursor = Products.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+        app.get('/authorization/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email }
+            const cursor = Users.find(query);
             const products = await cursor.toArray();
             res.send(products);
         })
